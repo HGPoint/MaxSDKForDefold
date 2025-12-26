@@ -188,48 +188,6 @@ static void CallVoidMethodCharCharChar(jobject instance, jmethodID method, const
     }
 }
 
-
-static void CallVoidMethodCharCharCharBool(jobject instance, jmethodID method, const char* cstr1, const char* cstr2, const char* cstr3, bool cbool)
-{
-    dmAndroid::ThreadAttacher threadAttacher;
-    JNIEnv* env = threadAttacher.GetEnv();
-
-    jstring jstr1 = NULL;
-    if (cstr1)
-    {
-        jstr1 = env->NewStringUTF(cstr1);
-    }
-
-    jstring jstr2 = NULL;
-    if (cstr2)
-    {
-        jstr2 = env->NewStringUTF(cstr2);
-    }
-    
-    jstring jstr3 = NULL;
-    if (cstr3)
-    {
-        jstr3 = env->NewStringUTF(cstr3);
-    }
-
-    env->CallVoidMethod(instance, method, jstr1, jstr2, jstr3, cbool);
-
-    if (cstr1)
-    {
-        env->DeleteLocalRef(jstr1);
-    }
-
-    if (cstr2)
-    {
-        env->DeleteLocalRef(jstr2);
-    }
-    
-    if (cstr3)
-    {
-        env->DeleteLocalRef(jstr3);
-    }
-}
-
 static void CallVoidMethodCharCharCharCharBool(jobject instance, jmethodID method, const char* cstr1, const char* cstr2, const char* cstr3, const char* cstr4, bool cbool)
 {
     dmAndroid::ThreadAttacher threadAttacher;
