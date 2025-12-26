@@ -1,2 +1,182 @@
-# MaxSDKForDefold
-MaxSDK Plugin for Defold
+# AppLovin Max SDK
+
+This is a native extension for [Defold engine](http://www.defold.com) with partial implementation of [AppLovin Max SDK](https://www.applovin.com/max/)
+
+ATTENTION! Currently only Android SDK is supported! No iOs support in current implementation! Even for Android only AdColony, AppLovin, Facebook, Google AdMob, InMobi, myTarget, Tapjoy, Vungle mediation adapters are supported.
+
+Supported ad types (Android):
+- [Interstitials](https://dash.applovin.com/documentation/mediation/android/getting-started/interstitials)
+- [Rewarded Ads](https://dash.applovin.com/documentation/mediation/android/getting-started/rewarded-ads)
+
+Banner/MREC API symbols are present, but currently not implemented on Android (no-op).
+
+Used AppLovin SDK v13.0.1.
+
+*Disclaimer: This extension is independent and unofficial, and not associated with AppLovin in any way.*
+
+## Installation
+
+You can use the Max SDK extension in your own project by adding this project as a [Defold library dependency](http://www.defold.com/manuals/libraries/).
+Open your game.project file and in the dependencies field under project add:
+
+>https://github.com/alexeyfeskov/defold-maxsdk/archive/master.zip
+
+or point to the ZIP file of a [specific release](https://github.com/alexeyfeskov/defold-maxsdk/releases).
+
+#### Android
+
+Since some mediation adapters requires D8 support use Defold 1.2.185 or later
+
+Add [SDK key from Applovin Dashboard](https://dash.applovin.com/docs/integration#androidEventTracking) and [Google AdMob app ID](https://support.google.com/admob/answer/7356431) to `game.project` file by adding lines:
+
+```
+[applovin]
+sdk_key_android = YOUR_SDK_KEY_HERE
+
+; Optional (used for Terms/Privacy consent flow configuration)
+privacy_policy_url = https://example.com/privacy
+terms_of_service_url = https://example.com/terms
+
+; Optional: force GDPR geography for testing (0/1)
+debug_user_geography = 0
+
+[admob]
+app_id = YOUR_ADMOB_APP_ID_HERE
+```
+
+## Example
+
+See the [example folder](https://github.com/alexeyfeskov/defold-maxsdk/tree/master/example) for understand how to use extension. Especially [ads.gui_script](https://github.com/alexeyfeskov/defold-maxsdk/blob/master/example/ads.gui_script) file.
+
+## LUA Api
+
+Please, read original [Android API docs](https://dash.applovin.com/documentation/mediation/android/getting-started/integration)
+
+```lua
+---------------------------------------
+-- Initialize SDK and start load ads --
+---------------------------------------
+if maxsdk then
+    maxsdk.set_has_user_consent(true) -- GDPR
+    maxsdk.set_is_age_restricted_user(false)
+    maxsdk.set_do_not_sell(false) -- CCPA for all others mediated networks
+
+    maxsdk.set_muted(false)
+    maxsdk.set_verbose_logging(true)
+    
+    maxsdk.set_callback(maxsdk_callback)
+    -- Optional: pass user_id (string)
+    maxsdk.initialize("USER_ID")
+
+    -- Optional: show AppLovin CMP for existing user
+    -- maxsdk.show_consent_flow()
+end
+
+-----------------------
+-- Start loading ads --
+-----------------------
+if maxsdk then
+    -- After SDK was initialized (`maxsdk.MSG_INITIALIZATION` event) - you can start loading ads
+    maxsdk.load_interstitial(interstitial_ad_unit)
+    maxsdk.load_rewarded(rewarded_ad_unit)
+
+    -- Banner API is currently not implemented on Android
+    -- maxsdk.load_banner(banner_ad_unit, maxsdk.SIZE_BANNER)
+
+    -- To validate integration you can use Mediation Debugger
+    -- https://dash.applovin.com/documentation/mediation/android/testing-networks/mediation-debugger
+    maxsdk.open_mediation_debugger()
+end
+
+--------------
+-- Show ads --
+--------------
+-- all `show_***` functions have optional `string` parameter to define placement
+if maxsdk and maxsdk.is_interstitial_loaded() then
+    maxsdk.show_interstitial()
+end
+
+if maxsdk and maxsdk.is_rewarded_loaded() then
+    maxsdk.show_rewarded()
+end
+
+end
+
+------------------------
+-- Receive SDK events --
+------------------------
+function maxsdk_callback(self, message_id, message)
+    if message_id == maxsdk.MSG_INITIALIZATION then
+        print("MSG_INITIALIZATION")
+
+    elseif message_id == maxsdk.MSG_INTERSTITIAL then
+        if message.event == maxsdk.EVENT_CLOSED then
+            print("EVENT_CLOSED: Interstitial AD closed")
+        elseif message.event == maxsdk.EVENT_CLICKED then
+            print("EVENT_CLICKED: Interstitial AD clicked")
+        elseif message.event == maxsdk.EVENT_FAILED_TO_SHOW then
+            print("EVENT_FAILED_TO_SHOW: Interstitial AD failed to show", message.code, message.error)
+        elseif message.event == maxsdk.EVENT_OPENING then
+            print("EVENT_OPENING: Interstitial AD is opening")
+        elseif message.event == maxsdk.EVENT_FAILED_TO_LOAD then
+            print("EVENT_FAILED_TO_LOAD: Interstitial AD failed to load", message.code, message.error)
+        elseif message.event == maxsdk.EVENT_FAILED_TO_LOAD_WATERFALL then
+            print("EVENT_FAILED_TO_LOAD_WATERFALL:", message.code, message.error, message.ad_network)
+        elseif message.event == maxsdk.EVENT_LOADED then
+            print("EVENT_LOADED: Interstitial AD loaded. Network:", message.network)
+        elseif message.event == maxsdk.EVENT_NOT_LOADED then
+            print("EVENT_NOT_LOADED: can't call show_interstitial() before EVENT_LOADED", message.code, message.error)
+        elseif message.event == maxsdk.EVENT_REVENUE_PAID then
+            print("EVENT_REVENUE_PAID: Interstitial AD revenue: ", message.revenue, message.network)
+        end
+
+    elseif message_id == maxsdk.MSG_REWARDED then
+        if message.event == maxsdk.EVENT_CLOSED then
+            print("EVENT_CLOSED: Rewarded AD closed")
+        elseif message.event == maxsdk.EVENT_FAILED_TO_SHOW then
+            print("EVENT_FAILED_TO_SHOW: Rewarded AD failed to show", message.code, message.error)
+        elseif message.event == maxsdk.EVENT_OPENING then
+            print("EVENT_OPENING: Rewarded AD is opening")
+        elseif message.event == maxsdk.EVENT_FAILED_TO_LOAD then
+            print("EVENT_FAILED_TO_LOAD: Rewarded AD failed to load", message.code, message.error)
+        elseif message.event == maxsdk.EVENT_LOADED then
+            print("EVENT_LOADED: Rewarded AD loaded. Network:", message.network)
+        elseif message.event == maxsdk.EVENT_NOT_LOADED then
+            print("EVENT_NOT_LOADED: can't call show_rewarded() before EVENT_LOADED", message.code, message.error)
+        elseif message.event == maxsdk.EVENT_EARNED_REWARD then
+            print("EVENT_EARNED_REWARD: Reward: ", message.amount, message.type)
+        elseif message.event == maxsdk.EVENT_REVENUE_PAID then
+            print("EVENT_REVENUE_PAID: Rewarded AD revenue: ", message.revenue, message.network)
+        end
+
+    elseif message_id == maxsdk.MSG_BANNER then
+        if message.event == maxsdk.EVENT_LOADED then
+            print("EVENT_LOADED: Banner AD loaded. Network:", message.network)
+        elseif message.event == maxsdk.EVENT_OPENING then
+            print("EVENT_OPENING: Banner AD is opening")
+        elseif message.event == maxsdk.EVENT_FAILED_TO_LOAD then
+            print("EVENT_FAILED_TO_LOAD: Banner AD failed to load", message.code, message.error)
+        elseif message.event == maxsdk.EVENT_FAILED_TO_LOAD_WATERFALL then
+            print("EVENT_FAILED_TO_LOAD_WATERFALL:", message.code, message.error, message.ad_network)
+        elseif message.event == maxsdk.EVENT_FAILED_TO_SHOW then
+            print("EVENT_FAILED_TO_SHOW: Banner AD failed to show", message.code, message.error)
+        elseif message.event == maxsdk.EVENT_EXPANDED then
+            print("EVENT_EXPANDED: Banner AD expanded")
+        elseif message.event == maxsdk.EVENT_COLLAPSED then
+            print("EVENT_COLLAPSED: Banner AD coppalsed")
+        elseif message.event == maxsdk.EVENT_CLICKED then
+            print("EVENT_CLICKED: Banner AD clicked")
+        elseif message.event == maxsdk.EVENT_CLOSED then
+            print("EVENT_CLOSED: Banner AD closed")
+        elseif message.event == maxsdk.EVENT_DESTROYED then
+            print("EVENT_DESTROYED: Banner AD destroyed")
+        elseif message.event == maxsdk.EVENT_NOT_LOADED then
+            print("EVENT_NOT_LOADED: can't call show_banner() before EVENT_LOADED", message.code, message.error)
+        elseif message.event == maxsdk.EVENT_REVENUE_PAID then
+            print("EVENT_REVENUE_PAID: Banner AD revenue: ", message.revenue, message.network)
+        end
+    end
+end
+```
+
+Feel free to push a Pull Request with other features implementation.

@@ -1,0 +1,171 @@
+configurations {
+    all {
+        exclude group: "androidx.multidex", module: "multidex"
+    }
+}
+
+repositories {
+    google()
+    mavenCentral()
+
+{{#applovin.IronSourceAdapter}}
+    maven { url "https://android-sdk.is.com" }
+{{/applovin.IronSourceAdapter}}
+
+{{#applovin.MaioAdapter}}
+    maven { url "https://imobile-maio.github.io/maven" }
+{{/applovin.MaioAdapter}}
+
+{{#applovin.MintegralAdapter}}
+    maven { url "https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_oversea" }
+{{/applovin.MintegralAdapter}}
+
+{{#applovin.OguryPresageAdapter}}
+    maven { url "https://maven.ogury.co" }
+{{/applovin.OguryPresageAdapter}}
+
+{{#applovin.ChartboostAdapter}}
+    maven { url "https://cboost.jfrog.io/artifactory/chartboost-ads/" }
+{{/applovin.ChartboostAdapter}}
+
+{{#applovin.ByteDanceAdapter}}
+    maven { url "https://artifact.bytedance.com/repository/pangle" }
+{{/applovin.ByteDanceAdapter}}
+
+{{#applovin.BidMachineAdapter}}
+    maven { url "https://artifactory.bidmachine.io/bidmachine" }
+{{/applovin.BidMachineAdapter}}
+
+{{#applovin.PubmaticAdapter}}
+    maven { url "https://repo.pubmatic.com/artifactory/public-repos" }
+{{/applovin.PubmaticAdapter}}
+
+{{#applovin.SmaatoAdapter}}
+    maven { url "https://s3.amazonaws.com/smaato-sdk-releases/" }
+{{/applovin.SmaatoAdapter}}
+
+{{#applovin.VerveAdapter}}
+    maven { url "https://verve.jfrog.io/artifactory/verve-gradle-release" }
+{{/applovin.VerveAdapter}}
+
+{{#applovin.YsoAdapter}}
+    maven { url "https://ysonetwork.s3.eu-west-3.amazonaws.com/sdk/android" }
+{{/applovin.YsoAdapter}}
+}
+
+dependencies {
+    // https://dash.applovin.com/documentation/mediation/android/getting-started/integration
+    // https://search.maven.org/search?q=g:com.applovin.mediation
+
+    // charboost
+    implementation 'com.google.android.gms:play-services-base:18.5.0'
+    // mintegral, inmobi
+    implementation 'androidx.recyclerview:recyclerview:1.3.2'
+    // inmobi
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    implementation 'com.applovin:applovin-sdk:13.0.1'
+
+    implementation 'com.google.android.ump:user-messaging-platform:3.0.0'
+
+
+    {{#applovin.BidMachineAdapter}}
+    implementation 'com.applovin.mediation:bidmachine-adapter:3.5.1.0'
+    {{/applovin.BidMachineAdapter}}
+
+    {{#applovin.BigoAdapter}}
+        implementation 'com.applovin.mediation:bigoads-adapter:5.6.2.0'
+    {{/applovin.BigoAdapter}}
+
+    {{#applovin.ChartboostAdapter}}
+        implementation 'com.applovin.mediation:chartboost-adapter:9.11.0.0'
+    {{/applovin.ChartboostAdapter}}
+
+    {{#applovin.FyberAdapter}}
+        implementation 'com.applovin.mediation:fyber-adapter:8.4.2.0' //DT Exchange
+    {{/applovin.FyberAdapter}}
+
+    {{#applovin.GoogleAdManagerAdapter}}
+        implementation 'com.applovin.mediation:google-ad-manager-adapter:24.9.0.0'
+    {{/applovin.GoogleAdManagerAdapter}}
+
+    {{#applovin.GoogleAdapter}}
+        implementation 'com.applovin.mediation:google-adapter:24.9.0.0'
+    {{/applovin.GoogleAdapter}}
+
+    {{#applovin.HyprmxAdapter}}
+        implementation 'com.applovin.mediation:hyprmx-adapter:6.4.2.3'
+    {{/applovin.HyprmxAdapter}}
+
+    {{#applovin.InMobiAdapter}}
+        implementation 'com.applovin.mediation:inmobi-adapter:11.1.0.0'
+    {{/applovin.InMobiAdapter}}
+
+    {{#applovin.IronSourceAdapter}}
+        implementation 'com.applovin.mediation:ironsource-adapter:9.2.0.0.0'
+    {{/applovin.IronSourceAdapter}}
+
+    {{#applovin.VungleAdapter}}
+        implementation 'com.applovin.mediation:vungle-adapter:7.6.2.0' //Liftoff Monetize *
+    {{/applovin.VungleAdapter}}
+
+    {{#applovin.LineAdapter}}
+        implementation 'com.applovin.mediation:line-adapter:2025.10.28.0'
+    {{/applovin.LineAdapter}}
+
+    {{#applovin.MaioAdapter}}
+        implementation 'com.applovin.mediation:maio-adapter:2.0.4.0'
+    {{/applovin.MaioAdapter}}
+
+    {{#applovin.FacebookAdapter}}
+        implementation 'com.applovin.mediation:facebook-adapter:6.21.0.0'
+    {{/applovin.FacebookAdapter}}
+
+    {{#applovin.MintegralAdapter}}
+        implementation 'com.applovin.mediation:mintegral-adapter:17.0.51.0'
+    {{/applovin.MintegralAdapter}}
+
+    {{#applovin.MobileFuseAdapter}}
+        implementation 'com.applovin.mediation:mobilefuse-adapter:1.9.3.0'
+    {{/applovin.MobileFuseAdapter}}
+
+    {{#applovin.MobileFuseAdapter}}
+        implementation 'com.applovin.mediation:moloco-adapter:4.4.0.0'
+    {{/applovin.MobileFuseAdapter}}
+
+    {{#applovin.OguryPresageAdapter}}
+        implementation 'com.applovin.mediation:ogury-presage-adapter:6.2.0.0'
+    {{/applovin.OguryPresageAdapter}}
+
+    {{#applovin.ByteDanceAdapter}}
+        implementation 'com.applovin.mediation:bytedance-adapter:7.8.0.8.0' //Pangle
+    {{/applovin.ByteDanceAdapter}}
+
+    {{#applovin.PubmaticAdapter}}
+        implementation 'com.applovin.mediation:pubmatic-adapter:4.11.0.0'
+    {{/applovin.PubmaticAdapter}}
+
+    {{#applovin.SmaatoAdapter}}
+        implementation 'com.applovin.mediation:smaato-adapter:22.7.2.3'
+    {{/applovin.SmaatoAdapter}}
+
+    {{#applovin.UnityAdsAdapter}}
+        implementation 'com.applovin.mediation:unityads-adapter:4.16.5.0'
+    {{/applovin.UnityAdsAdapter}}
+
+    {{#applovin.VerveAdapter}}
+        implementation 'com.applovin.mediation:verve-adapter:3.7.1.0'
+    {{/applovin.VerveAdapter}}
+
+    {{#applovin.MyTargetAdapter}}
+        implementation 'com.applovin.mediation:mytarget-adapter:5.27.4.0' //VK Ad Network
+    {{/applovin.MyTargetAdapter}}
+
+    {{#applovin.YandexAdapter}}
+        implementation 'com.applovin.mediation:yandex-adapter:7.18.1.0'
+    {{/applovin.YandexAdapter}}
+
+    {{#applovin.YsoAdapter}}
+        implementation 'com.applovin.mediation:yso-network-adapter:+'
+    {{/applovin.YsoAdapter}}
+}

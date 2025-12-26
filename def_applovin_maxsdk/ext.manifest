@@ -1,0 +1,14 @@
+# C++ symbol in your extension
+name: "AppLovinMaxExt"
+
+platforms:
+    android:
+        context:
+            aaptExtraPackages: ['com.applovin.sdk', 'androidx.work', 'com.google.android.gms.common', 'androidx.core', 'androidx.startup']
+    
+    ios:
+        context:
+            frameworks: ["CFNetwork", "Security", "MobileCoreServices", "AdSupport", "AppTrackingTransparency", "AudioToolbox", "AVFoundation", "CoreGraphics", "CoreMedia", "CoreMotion", "CoreTelephony", "Foundation", "MessageUI", "SafariServices", "StoreKit", "SystemConfiguration", "UIKit", "WebKit"]
+            flags:      ["-fobjc-arc"]
+            linkFlags:  ["-ObjC", '-Wl,-rpath,/usr/lib/swift', '-Wl,-rpath,@executable_path/Frameworks']
+            libs:       ["z", "swiftCompatibility51", "swiftCompatibility50"]

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ad-services-config>
+    <attribution allowAllNetworks="true"/>
+    <custom-audience allowAllNetworks="true"/>
+    <ad-selection allowAllNetworks="true"/>
+</ad-services-config>
