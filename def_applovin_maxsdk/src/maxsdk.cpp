@@ -2,7 +2,9 @@
 #define LIB_NAME "AppLovinMax"
 #define MODULE_NAME "maxsdk"
 
+#ifndef DLIB_LOG_DOMAIN
 #define DLIB_LOG_DOMAIN LIB_NAME
+#endif
 #include <dmsdk/sdk.h>
 
 #if defined(DM_PLATFORM_ANDROID) || defined(DM_PLATFORM_IOS)
@@ -27,7 +29,7 @@ static int Lua_Initialize(lua_State* L)
         if (lua_type(L, 1) != LUA_TSTRING) {
             char msg[256];
             snprintf(msg, sizeof(msg), "Expected string, got %s. Wrong type for user id '%s'.", luaL_typename(L, 1), lua_tostring(L, 1));
-            luaL_error(L, msg);
+            luaL_error(L, "%s", msg);
             return 0;
         }
         user_id = luaL_checkstring(L, 1);
@@ -57,7 +59,7 @@ static int Lua_SetMuted(lua_State* L)
     if (lua_type(L, 1) != LUA_TBOOLEAN) {
         char msg[256];
         snprintf(msg, sizeof(msg), "Expected boolean, got %s. Wrong type for SetMuted '%s'.", luaL_typename(L, 1), lua_tostring(L, 1));
-        luaL_error(L, msg);
+        luaL_error(L, "%s", msg);
         return 0;
     }
     bool muted_lua = luaL_checkbool(L, 1);
@@ -71,7 +73,7 @@ static int Lua_SetVerboseLogging(lua_State* L)
     if (lua_type(L, 1) != LUA_TBOOLEAN) {
         char msg[256];
         snprintf(msg, sizeof(msg), "Expected boolean, got %s. Wrong type for SetVerboseLogging '%s'.", luaL_typename(L, 1), lua_tostring(L, 1));
-        luaL_error(L, msg);
+        luaL_error(L, "%s", msg);
         return 0;
     }
     bool verbose_lua = luaL_checkbool(L, 1);
@@ -85,7 +87,7 @@ static int Lua_SetHasUserConsent(lua_State* L)
     if (lua_type(L, 1) != LUA_TBOOLEAN) {
         char msg[256];
         snprintf(msg, sizeof(msg), "Expected boolean, got %s. Wrong type for SetHasUserConsent '%s'.", luaL_typename(L, 1), lua_tostring(L, 1));
-        luaL_error(L, msg);
+        luaL_error(L, "%s", msg);
         return 0;
     }
     bool hasConsent_lua = luaL_checkbool(L, 1);
@@ -107,7 +109,7 @@ static int Lua_SetIsAgeRestrictedUser(lua_State* L)
     if (lua_type(L, 1) != LUA_TBOOLEAN) {
         char msg[256];
         snprintf(msg, sizeof(msg), "Expected boolean, got %s. Wrong type for SetIsAgeRestrictedUser '%s'.", luaL_typename(L, 1), lua_tostring(L, 1));
-        luaL_error(L, msg);
+        luaL_error(L, "%s", msg);
         return 0;
     }
     bool ageRestricted_lua = luaL_checkbool(L, 1);
@@ -121,7 +123,7 @@ static int Lua_SetDoNotSell(lua_State* L)
     if (lua_type(L, 1) != LUA_TBOOLEAN) {
         char msg[256];
         snprintf(msg, sizeof(msg), "Expected boolean, got %s. Wrong type for SetDoNotSell '%s'.", luaL_typename(L, 1), lua_tostring(L, 1));
-        luaL_error(L, msg);
+        luaL_error(L, "%s", msg);
         return 0;
     }
     bool doNotSell_lua = luaL_checkbool(L, 1);
@@ -129,19 +131,26 @@ static int Lua_SetDoNotSell(lua_State* L)
     return 0;
 }
 
-//static int Lua_SetFbDataProcessingOptions(lua_State* L)
-//{
-//    DM_LUA_STACK_CHECK(L, 0);
-//    const char* mode_lua = luaL_checkstringd(L, 1, NULL);
-//    int country_lua = 0;
-//    int state_lua = 0;
-//    if (mode_lua) {
-//        country_lua = (int)luaL_checknumber(L, 2);
-//        state_lua = (int)luaL_checknumber(L, 3);
-//    }
-//    SetFbDataProcessingOptions(mode_lua, country_lua, state_lua);
-//    return 0;
-//}
+static void SetFbDataProcessingOptions(const char* mode, int country, int state)
+{
+    (void)mode;
+    (void)country;
+    (void)state;
+}
+
+static int Lua_SetFbDataProcessingOptions(lua_State* L)
+{
+    DM_LUA_STACK_CHECK(L, 0);
+    const char* mode_lua = luaL_checkstringd(L, 1, NULL);
+    int country_lua = 0;
+    int state_lua = 0;
+    if (mode_lua) {
+        country_lua = (int)luaL_checknumber(L, 2);
+        state_lua = (int)luaL_checknumber(L, 3);
+    }
+    SetFbDataProcessingOptions(mode_lua, country_lua, state_lua);
+    return 0;
+}
 
 static int Lua_OpenMediationDebugger(lua_State* L)
 {
@@ -156,7 +165,7 @@ static int Lua_LoadInterstitial(lua_State* L)
     if (lua_type(L, 1) != LUA_TSTRING) {
         char msg[256];
         snprintf(msg, sizeof(msg), "Expected string, got %s. Wrong type for Interstitial UnitId variable '%s'.", luaL_typename(L, 1), lua_tostring(L, 1));
-        luaL_error(L, msg);
+        luaL_error(L, "%s", msg);
         return 0;
     }
     const char* unitId_lua = luaL_checkstring(L, 1);
@@ -170,7 +179,7 @@ static int Lua_ShowInterstitial(lua_State* L)
     if (lua_type(L, 1) != LUA_TSTRING) {
         char msg[256];
         snprintf(msg, sizeof(msg), "Expected string, got %s. Wrong type for Interstitial UnitId variable '%s'.", luaL_typename(L, 1), lua_tostring(L, 1));
-        luaL_error(L, msg);
+        luaL_error(L, "%s", msg);
         return 0;
     }
     const char* unitId_lua = luaL_checkstringd(L, 1, NULL);
@@ -185,7 +194,7 @@ static int Lua_IsInterstitialLoaded(lua_State* L)
     if (lua_type(L, 1) != LUA_TSTRING) {
         char msg[256];
         snprintf(msg, sizeof(msg), "Expected string, got %s. Wrong type for Interstitial UnitId variable '%s'.", luaL_typename(L, 1), lua_tostring(L, 1));
-        luaL_error(L, msg);
+        luaL_error(L, "%s", msg);
         return 0;
     }
     const char* unitId_lua = luaL_checkstringd(L, 1, NULL);
@@ -200,7 +209,7 @@ static int Lua_LoadRewarded(lua_State* L)
     if (lua_type(L, 1) != LUA_TSTRING) {
         char msg[256];
         snprintf(msg, sizeof(msg), "Expected string, got %s. Wrong type for Rewarded UnitId variable '%s'.", luaL_typename(L, 1), lua_tostring(L, 1));
-        luaL_error(L, msg);
+        luaL_error(L, "%s", msg);
         return 0;
     }
     const char* unitId_lua = luaL_checkstring(L, 1);
@@ -214,7 +223,7 @@ static int Lua_ShowRewarded(lua_State* L)
     if (lua_type(L, 1) != LUA_TSTRING) {
         char msg[256];
         snprintf(msg, sizeof(msg), "Expected string, got %s. Wrong type for Rewarded UnitId variable '%s'.", luaL_typename(L, 1), lua_tostring(L, 1));
-        luaL_error(L, msg);
+        luaL_error(L, "%s", msg);
         return 0;
     }
     const char* unitId_lua = luaL_checkstring(L, 1);
@@ -229,7 +238,7 @@ static int Lua_IsRewardedLoaded(lua_State* L)
     if (lua_type(L, 1) != LUA_TSTRING) {
         char msg[256];
         snprintf(msg, sizeof(msg), "Expected string, got %s. Wrong type for Rewarded UnitId variable '%s'.", luaL_typename(L, 1), lua_tostring(L, 1));
-        luaL_error(L, msg);
+        luaL_error(L, "%s", msg);
         return 0;
     }
     const char* unitId_lua = luaL_checkstring(L, 1);
@@ -244,7 +253,7 @@ static int Lua_LoadBanner(lua_State* L)
     if (lua_type(L, 1) != LUA_TSTRING) {
         char msg[256];
         snprintf(msg, sizeof(msg), "Expected string, got %s. Wrong type for Banner UnitId variable '%s'.", luaL_typename(L, 1), lua_tostring(L, 1));
-        luaL_error(L, msg);
+        luaL_error(L, "%s", msg);
         return 0;
     }
     const char* unitId_lua = luaL_checkstring(L, 1);
@@ -313,7 +322,7 @@ static int Lua_SetDebugUserGeography(lua_State* L)
     if (lua_type(L, 1) != LUA_TBOOLEAN) {
         char msg[256];
         snprintf(msg, sizeof(msg), "Expected boolean, got %s. Wrong type for Lua_SetDebugUserGeography'%s'.", luaL_typename(L, 1), lua_tostring(L, 1));
-        luaL_error(L, msg);
+        luaL_error(L, "%s", msg);
         return 0;
     }
     debug_user_geography = luaL_checkbool(L, 1);
@@ -333,7 +342,7 @@ static const luaL_reg Module_methods[] =
     {"has_user_consent", Lua_HasUserConsent},
     {"set_is_age_restricted_user", Lua_SetIsAgeRestrictedUser},
     {"set_do_not_sell", Lua_SetDoNotSell},
-//    {"set_fb_data_processing_options", Lua_SetFbDataProcessingOptions},
+    {"set_fb_data_processing_options", Lua_SetFbDataProcessingOptions},
     {"open_mediation_debugger", Lua_OpenMediationDebugger},
 
     {"load_interstitial", Lua_LoadInterstitial},
@@ -439,11 +448,11 @@ static dmExtension::Result UpdateAppLovinMax(dmExtension::Params* params)
 
 static void OnEventAppLovinMax(dmExtension::Params* params, const dmExtension::Event* event)
 {
-    if(event->m_Event == dmExtension::EVENT_ID_ACTIVATEAPP)
+    if((int)event->m_Event == (int)dmExtension::EVENT_ID_ACTIVATEAPP)
     {
         OnActivateApp();
     }
-    else if(event->m_Event == dmExtension::EVENT_ID_DEACTIVATEAPP)
+    else if((int)event->m_Event == (int)dmExtension::EVENT_ID_DEACTIVATEAPP)
     {
         OnDeactivateApp();
     }

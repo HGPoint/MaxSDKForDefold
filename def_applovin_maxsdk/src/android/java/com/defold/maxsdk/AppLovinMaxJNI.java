@@ -2,6 +2,7 @@ package com.defold.maxsdk;
 
 import android.app.Activity;
 import android.net.Uri;
+import android.util.Log;
 
 import com.applovin.mediation.MaxAd;
 import com.applovin.mediation.MaxAdListener;
@@ -41,6 +42,7 @@ public class AppLovinMaxJNI {
     private static final int MSG_REWARDED = 2;
     private static final int MSG_BANNER = 3;
     private static final int MSG_INITIALIZATION = 4;
+    private static final int MSG_CONSENT_FLOW = 5;
 
     private static final int EVENT_CLOSED = 1;
     private static final int EVENT_FAILED_TO_SHOW = 2;
@@ -57,6 +59,8 @@ public class AppLovinMaxJNI {
     private static final int EVENT_REVENUE_PAID = 13;
     private static final int EVENT_SIZE_UPDATE = 14;
     private static final int EVENT_FAILED_TO_LOAD_WATERFALL = 15;
+    private static final int EVENT_CONSENT_FLOW_COMPLETED = 16;
+    private static final int EVENT_CONSENT_FLOW_FAILED = 17;
 
     // duplicate of enums from maxsdk_private.h:
     private static final int SIZE_BANNER = 0;
@@ -144,6 +148,10 @@ public class AppLovinMaxJNI {
             public void onCompleted(final AppLovinCmpError error) {
                 if (null == error) {
                     // The CMP alert was shown successfully.
+                    sendSimpleMessage(MSG_CONSENT_FLOW, EVENT_CONSENT_FLOW_COMPLETED);
+                } else {
+                    // Handle error case
+                    sendConsentFlowErrorMessage(error);
                 }
             }
         });
@@ -396,6 +404,20 @@ public class AppLovinMaxJNI {
         maxsdkAddToQueue(msg, message);
     }
 
+    private void sendConsentFlowErrorMessage(final AppLovinCmpError cmpError) {
+        String message;
+        try {
+            JSONObject obj = new JSONObject();
+            obj.put(MSG_KEY_EVENT, EVENT_CONSENT_FLOW_FAILED);
+            obj.put(MSG_KEY_CODE, cmpError.getCode());
+            obj.put(MSG_KEY_ERROR, cmpError.getMessage());
+            message = obj.toString();
+        } catch (JSONException e) {
+            message = getJsonConversionErrorMessage(e.getMessage());
+        }
+        maxsdkAddToQueue(MSG_CONSENT_FLOW, message);
+    }
+
 //--------------------------------------------------
 // Interstitial ADS
 
@@ -447,29 +469,31 @@ public class AppLovinMaxJNI {
 
 //--------------------------------------------------
 // Banner ADS
+// WARNING: Banner ads are not implemented yet
 
     public void loadBanner(final String unitId, final int bannerSize) {
+        Log.w("AppLovinMaxJNI", "loadBanner() is not implemented yet");
     }
 
     public void destroyBanner() {
-                // No implementation
+        Log.w("AppLovinMaxJNI", "destroyBanner() is not implemented yet");
     }
 
     public void showBanner(final int pos, final String placement) {
-                // No implementation
+        Log.w("AppLovinMaxJNI", "showBanner() is not implemented yet");
     }
 
     public void hideBanner() {
-                // No implementation
+        Log.w("AppLovinMaxJNI", "hideBanner() is not implemented yet");
     }
 
     public boolean isBannerLoaded() {
-        // No implementation
+        Log.w("AppLovinMaxJNI", "isBannerLoaded() is not implemented yet");
         return false;
     }
 
     public boolean isBannerShown() {
-        // No implementation
+        Log.w("AppLovinMaxJNI", "isBannerShown() is not implemented yet");
         return false;
     }
 }
