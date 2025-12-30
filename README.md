@@ -10,7 +10,7 @@ Supported ad types (Android):
 
 Banner/MREC API symbols are present, but currently not implemented on Android (no-op).
 
-Used AppLovin SDK v13.0.1.
+Used AppLovin SDK v13.5.1.
 
 *Disclaimer: This extension is independent and unofficial, and not associated with AppLovin in any way.*
 
