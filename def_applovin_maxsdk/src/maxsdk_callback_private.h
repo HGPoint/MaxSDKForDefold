@@ -14,6 +14,7 @@ enum MessageId
     MSG_REWARDED =                  2,
     MSG_BANNER =                    3,
     MSG_INITIALIZATION =            4,
+    MSG_CONSENT_FLOW =              5,
 };
 
 enum MessageEvent
@@ -33,6 +34,8 @@ enum MessageEvent
     EVENT_REVENUE_PAID =            13,
     EVENT_SIZE_UPDATE =             14,
     EVENT_FAILED_TO_LOAD_WATERFALL = 15,
+    EVENT_CONSENT_FLOW_COMPLETED =  16,
+    EVENT_CONSENT_FLOW_FAILED =     17,
 };
 
 struct CallbackData

@@ -84,7 +84,7 @@ static bool CallBoolMethodChar(jobject instance, jmethodID method, const char* c
     
     if (cstr)
     {
-        jstr = env->NewStringUTF(cstr);
+        env->DeleteLocalRef(jstr);
     }
     return JNI_TRUE == return_value;
 }

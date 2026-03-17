@@ -32,7 +32,7 @@ import org.json.JSONException;
 
 public class AppLovinMaxJNI {
 
-//    private static final String TAG = "AppLovinMaxJNI";
+    private static final String TAG = "AppLovinMaxJNI";
 
     public static native void maxsdkAddToQueue(int msg, String json);
 
@@ -472,28 +472,28 @@ public class AppLovinMaxJNI {
 // WARNING: Banner ads are not implemented yet
 
     public void loadBanner(final String unitId, final int bannerSize) {
-        Log.w("AppLovinMaxJNI", "loadBanner() is not implemented yet");
+        Log.w(TAG, "loadBanner() is not implemented yet");
     }
 
     public void destroyBanner() {
-        Log.w("AppLovinMaxJNI", "destroyBanner() is not implemented yet");
+        Log.w(TAG, "destroyBanner() is not implemented yet");
     }
 
     public void showBanner(final int pos, final String placement) {
-        Log.w("AppLovinMaxJNI", "showBanner() is not implemented yet");
+        Log.w(TAG, "showBanner() is not implemented yet");
     }
 
     public void hideBanner() {
-        Log.w("AppLovinMaxJNI", "hideBanner() is not implemented yet");
+        Log.w(TAG, "hideBanner() is not implemented yet");
     }
 
     public boolean isBannerLoaded() {
-        Log.w("AppLovinMaxJNI", "isBannerLoaded() is not implemented yet");
+        Log.w(TAG, "isBannerLoaded() is not implemented yet");
         return false;
     }
 
     public boolean isBannerShown() {
-        Log.w("AppLovinMaxJNI", "isBannerShown() is not implemented yet");
+        Log.w(TAG, "isBannerShown() is not implemented yet");
         return false;
     }
 }

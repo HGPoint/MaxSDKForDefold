@@ -228,6 +228,9 @@
   - name: MSG_BANNER
     type: number
 
+  - name: MSG_CONSENT_FLOW
+    type: number
+
 #*****************************************************************************************************
 
   - name: EVENT_CLOSED
@@ -237,6 +240,12 @@
     type: number
 
   - name: EVENT_OPENING
+    type: number
+
+  - name: EVENT_CONSENT_FLOW_COMPLETED
+    type: number
+
+  - name: EVENT_CONSENT_FLOW_FAILED
     type: number
 
   - name: EVENT_FAILED_TO_LOAD
