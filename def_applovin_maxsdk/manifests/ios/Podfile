@@ -64,3 +64,8 @@ pod 'AppLovinMediationByteDanceAdapter', '8.2.1.0.0'
 {{#applovin.BidMachineAdapter}}
 pod 'AppLovinMediationBidMachineAdapter', '3.8.0.0.0'
 {{/applovin.BidMachineAdapter}}
+
+{{#applovin.YandexAdapter}}
+pod 'AppLovinMediationYandexAdapter', '5.5.0.0'
+{{/applovin.YandexAdapter}}
+
