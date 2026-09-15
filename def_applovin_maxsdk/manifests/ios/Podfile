@@ -1,66 +1,66 @@
 platform :ios, '12.4'
-pod 'AppLovinSDK','13.0.0'
+pod 'AppLovinSDK','13.6.4'
 
-pod 'AppLovinMediationAmazonAdMarketplaceAdapter', '4.10.0.0'
-pod 'AmazonPublisherServicesSDK', '4.10.0'
-pod 'Google-Mobile-Ads-SDK', '11.10.0'
+pod 'AppLovinMediationAmazonAdMarketplaceAdapter', '5.6.4.0'
+pod 'AmazonPublisherServicesSDK', '5.6.4'
+pod 'Google-Mobile-Ads-SDK', '13.9.0'
 
 {{#applovin.MintegralAdapter}}
-pod 'AppLovinMediationMintegralAdapter', '7.7.2.0.1' 
+pod 'AppLovinMediationMintegralAdapter', '8.1.7.0.0' 
 {{/applovin.MintegralAdapter}}
 
 {{#applovin.InMobiAdapter}}
-pod 'AppLovinMediationInMobiAdapter', '10.7.5.1' 
+pod 'AppLovinMediationInMobiAdapter', '11.4.1.2' 
 {{/applovin.InMobiAdapter}}
 
 {{#applovin.IronSourceAdapter}}
-pod 'AppLovinMediationIronSourceAdapter', '8.3.0.0.1' 
+pod 'AppLovinMediationIronSourceAdapter', '9.6.0.0.0' 
 {{/applovin.IronSourceAdapter}}
 
 {{#applovin.VungleAdapter}}
-pod 'AppLovinMediationVungleAdapter', '7.4.1.1' 
+pod 'AppLovinMediationVungleAdapter', '7.7.7.0' 
 {{/applovin.VungleAdapter}}
 
 {{#applovin.MaioAdapter}}
-pod 'AppLovinMediationMaioAdapter', '2.1.5.0' 
+pod 'AppLovinMediationMaioAdapter', '2.1.6.0' 
 {{/applovin.MaioAdapter}}
 
 {{#applovin.FacebookAdapter}}
-pod 'AppLovinMediationFacebookAdapter', '6.15.2.1' 
+pod 'AppLovinMediationFacebookAdapter', '6.22.0.1' 
 {{/applovin.FacebookAdapter}}
 
 {{#applovin.MyTargetAdapter}}
-pod 'AppLovinMediationMyTargetAdapter', '5.21.9.0' 
+pod 'AppLovinMediationMyTargetAdapter', '5.45.0.0' 
 {{/applovin.MyTargetAdapter}}
 
 {{#applovin.UnityAdsAdapter}}
-pod 'AppLovinMediationUnityAdsAdapter', '4.12.3.0' 
+pod 'AppLovinMediationUnityAdsAdapter', '4.20.0.0' 
 {{/applovin.UnityAdsAdapter}}
 
 {{#applovin.OguryPresageAdapter}}
-pod 'AppLovinMediationOguryPresageAdapter', '4.4.1.0' 
+pod 'AppLovinMediationOguryPresageAdapter', '5.3.0.0' 
 {{/applovin.OguryPresageAdapter}}
 
 {{#applovin.FyberAdapter}}
-pod 'AppLovinMediationFyberAdapter', '8.3.2.1' 
+pod 'AppLovinMediationFyberAdapter', '8.4.10.0' 
 {{/applovin.FyberAdapter}}
 
 {{#applovin.GoogleAdManagerAdapter}}
-pod 'AppLovinMediationGoogleAdManagerAdapter', '11.10.0.0' 
+pod 'AppLovinMediationGoogleAdManagerAdapter', '13.9.0.0' 
 {{/applovin.GoogleAdManagerAdapter}}
 
 {{#applovin.GoogleAdapter}}
-pod 'AppLovinMediationGoogleAdapter', '11.10.0.0' 
+pod 'AppLovinMediationGoogleAdapter', '13.9.0.0' 
 {{/applovin.GoogleAdapter}}
 
 {{#applovin.ChartboostAdapter}}
-pod 'AppLovinMediationChartboostAdapter', '9.7.0.2' 
+pod 'AppLovinMediationChartboostAdapter', '9.14.0.0' 
 {{/applovin.ChartboostAdapter}}
 
 {{#applovin.ByteDanceAdapter}}
-pod 'AppLovinMediationByteDanceAdapter', '6.2.0.7.2' 
+pod 'AppLovinMediationByteDanceAdapter', '8.2.1.0.0' 
 {{/applovin.ByteDanceAdapter}}
 
 {{#applovin.BidMachineAdapter}}
-pod 'AppLovinMediationBidMachineAdapter', '3.0.1.0.0'
+pod 'AppLovinMediationBidMachineAdapter', '3.8.0.0.0'
 {{/applovin.BidMachineAdapter}}
