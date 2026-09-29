@@ -8,7 +8,24 @@ platforms:
     
     ios:
         context:
-            frameworks: ["CFNetwork", "Security", "MobileCoreServices", "AdSupport", "AppTrackingTransparency", "AudioToolbox", "AVFoundation", "CoreGraphics", "CoreMedia", "CoreMotion", "CoreTelephony", "Foundation", "MessageUI", "SafariServices", "StoreKit", "SystemConfiguration", "UIKit", "WebKit"]
-            flags:      ["-fobjc-arc"]
-            linkFlags:  ["-ObjC", '-Wl,-rpath,/usr/lib/swift', '-Wl,-rpath,@executable_path/Frameworks']
-            libs:       ["z", "swiftCompatibility51", "swiftCompatibility50"]
+            frameworks: [
+                "AdSupport",
+                "AudioToolbox",
+                "AVFoundation",
+                "CFNetwork",
+                "CoreGraphics",
+                "CoreHaptics",
+                "CoreMedia",
+                "CoreMotion",
+                "CoreTelephony",
+                "MessageUI",
+                "SafariServices",
+                "StoreKit",
+                "SystemConfiguration",
+                "UIKit",
+                "WebKit"
+            ]
+            weakFrameworks: ["AppTrackingTransparency"]
+            libs: ["z"]
+            flags: ["-fobjc-arc"]
+            linkFlags: ["-ObjC", "-Wl,-rpath,/usr/lib/swift", "-Wl,-rpath,@executable_path/Frameworks"]
