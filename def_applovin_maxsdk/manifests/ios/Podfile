@@ -54,11 +54,11 @@ pod 'AppLovinMediationGoogleAdapter', '13.10.0.0'
 {{/applovin.GoogleAdapter}}
 
 {{#applovin.ChartboostAdapter}}
-pod 'AppLovinMediationChartboostAdapter', '9.14.2.0' 
+pod 'AppLovinMediationChartboostAdapter', '9.14.1.0' 
 {{/applovin.ChartboostAdapter}}
 
 {{#applovin.ByteDanceAdapter}}
-pod 'AppLovinMediationByteDanceAdapter', '8.3.0.8.0' 
+pod 'AppLovinMediationByteDanceAdapter', '8.3.0.6.1' 
 {{/applovin.ByteDanceAdapter}}
 
 {{#applovin.BidMachineAdapter}}
