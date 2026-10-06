@@ -23,7 +23,8 @@ platforms:
                 "StoreKit",
                 "SystemConfiguration",
                 "UIKit",
-                "WebKit"
+                "WebKit",
+                "Foundation"
             ]
             weakFrameworks: ["AppTrackingTransparency"]
             libs: ["z"]
