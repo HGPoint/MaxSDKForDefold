@@ -6,13 +6,13 @@
 		<key>NSAppTransportSecurity</key>
 		<dict>
 			<key>NSAllowsArbitraryLoads</key>
-			<true/>
+			<true />
 		</dict>
 
 		<key>AppLovinSdkKey</key>
 		<string>{{applovin.sdk_key_ios}}</string>
 		<key>GADIsAdManagerApp</key>
-		<true/>
+		<true />
 
 		<key>GADApplicationIdentifier</key>
 		<string>{{admob.app_id}}</string>
