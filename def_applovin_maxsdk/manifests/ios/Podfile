@@ -4,39 +4,35 @@ pod 'AppLovinSDK','13.6.4'
 pod 'Google-Mobile-Ads-SDK', '13.11.0'
 
 {{#applovin.MintegralAdapter}}
-pod 'AppLovinMediationMintegralAdapter', '8.1.4.0.0' 
+pod 'AppLovinMediationMintegralAdapter', '8.1.7.0.1'
 {{/applovin.MintegralAdapter}}
 
 {{#applovin.InMobiAdapter}}
-pod 'AppLovinMediationInMobiAdapter', '11.5.0.0' 
+pod 'AppLovinMediationInMobiAdapter', '11.5.0.0'
 {{/applovin.InMobiAdapter}}
 
 {{#applovin.IronSourceAdapter}}
-pod 'AppLovinMediationIronSourceAdapter', '9.6.1.0.0' 
+pod 'AppLovinMediationIronSourceAdapter', '9.6.1.0.0'
 {{/applovin.IronSourceAdapter}}
 
 {{#applovin.VungleAdapter}}
-pod 'AppLovinMediationVungleAdapter', '7.7.8.0' 
+pod 'AppLovinMediationVungleAdapter', '7.7.8.0'
 {{/applovin.VungleAdapter}}
 
-{{#applovin.MaioAdapter}}
-pod 'AppLovinMediationMaioAdapter', '2.1.6.0' 
-{{/applovin.MaioAdapter}}
-
 {{#applovin.FacebookAdapter}}
-pod 'AppLovinMediationFacebookAdapter', '6.22.0.4' 
+pod 'AppLovinMediationFacebookAdapter', '6.22.0.4'
 {{/applovin.FacebookAdapter}}
 
 {{#applovin.MyTargetAdapter}}
-pod 'AppLovinMediationMyTargetAdapter', '5.27.4.0'
+pod 'AppLovinMediationMyTargetAdapter', '5.43.0.0'
 {{/applovin.MyTargetAdapter}}
 
 {{#applovin.UnityAdsAdapter}}
-pod 'AppLovinMediationUnityAdsAdapter', '4.21.0.0' 
+pod 'AppLovinMediationUnityAdsAdapter', '4.21.0.0'
 {{/applovin.UnityAdsAdapter}}
 
 {{#applovin.OguryPresageAdapter}}
-pod 'AppLovinMediationOguryPresageAdapter', '5.2.3.0' 
+pod 'AppLovinMediationOguryPresageAdapter', '5.3.1.0'
 {{/applovin.OguryPresageAdapter}}
 
 {{#applovin.FyberAdapter}}
@@ -52,17 +48,17 @@ pod 'AppLovinMediationGoogleAdapter', '13.11.0.0'
 {{/applovin.GoogleAdapter}}
 
 {{#applovin.ChartboostAdapter}}
-pod 'AppLovinMediationChartboostAdapter', '9.14.2.0' 
+pod 'AppLovinMediationChartboostAdapter', '9.14.2.0'
 {{/applovin.ChartboostAdapter}}
 
 {{#applovin.ByteDanceAdapter}}
-pod 'AppLovinMediationByteDanceAdapter', '8.3.0.6.1' 
+pod 'AppLovinMediationByteDanceAdapter', '8.3.0.8.0'
 {{/applovin.ByteDanceAdapter}}
 
 {{#applovin.BidMachineAdapter}}
-pod 'AppLovinMediationBidMachineAdapter', '3.8.1.0.0'
+pod 'AppLovinMediationBidMachineAdapter', '3.8.2.0.0'
 {{/applovin.BidMachineAdapter}}
 
 {{#applovin.YandexAdapter}}
-pod 'AppLovinMediationYandexAdapter', '8.3.0.0'
+pod 'AppLovinMediationYandexAdapter', '8.6.0.0'
 {{/applovin.YandexAdapter}}
