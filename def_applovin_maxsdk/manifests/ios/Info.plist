@@ -10,7 +10,7 @@
 		</dict>
 
 		<key>AppLovinSdkKey</key>
-		<string>{{applovin.sdk_key_ios}}</string>
+		<string>{{applovin.sdk_key}}</string>
 		<key>GADIsAdManagerApp</key>
 		<true />
 

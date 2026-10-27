@@ -15,8 +15,7 @@
 
 namespace dmAppLovinMax {
 
-const char* sdk_key_android = NULL;
-const char* sdk_key_ios = NULL;
+const char* sdk_key = NULL;
 const char* privacy_policy_url = NULL;
 const char* terms_of_use_url = NULL;
 bool debug_user_geography = false;
@@ -36,7 +35,7 @@ static int Lua_Initialize(lua_State* L)
         user_id = luaL_checkstring(L, 1);
     }
 
-    Initialize(sdk_key_ios, privacy_policy_url, terms_of_use_url, user_id, debug_user_geography);
+    Initialize(sdk_key, privacy_policy_url, terms_of_use_url, user_id, debug_user_geography);
     return 0;
 }
 
@@ -422,8 +421,7 @@ static dmExtension::Result AppInitializeAppLovinMax(dmExtension::AppParams* para
 static dmExtension::Result InitializeAppLovinMax(dmExtension::Params* params)
 {
     LuaInit(params->m_L);
-    sdk_key_android = dmConfigFile::GetString(params->m_ConfigFile, "applovin.sdk_key_android", 0);
-    sdk_key_ios = dmConfigFile::GetString(params->m_ConfigFile, "applovin.sdk_key_ios", 0);
+    sdk_key = dmConfigFile::GetString(params->m_ConfigFile, "applovin.sdk_key", 0);
     privacy_policy_url = dmConfigFile::GetString(params->m_ConfigFile, "applovin.privacy_policy_url", 0);
     terms_of_use_url = dmConfigFile::GetString(params->m_ConfigFile, "applovin.terms_of_service_url", 0);
     debug_user_geography = dmConfigFile::GetInt(params->m_ConfigFile, "applovin.debug_user_geography", 0) == 1;

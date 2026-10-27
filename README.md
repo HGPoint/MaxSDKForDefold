@@ -31,7 +31,7 @@ Add [SDK key from Applovin Dashboard](https://dash.applovin.com/docs/integration
 
 ```
 [applovin]
-sdk_key_android = YOUR_SDK_KEY_HERE
+sdk_key = YOUR_SDK_KEY_HERE
 
 ; Optional (used for Terms/Privacy consent flow configuration)
 privacy_policy_url = https://example.com/privacy
