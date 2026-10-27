@@ -1,6 +1,4 @@
-#import <Foundation/Foundation.h>
 #import <AppLovinSDK/AppLovinSDK.h>
-#import <DTBiOSSDK/DTBiOSSDK.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
