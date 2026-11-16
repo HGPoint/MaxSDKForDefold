@@ -11,6 +11,32 @@
 
 #*****************************************************************************************************
 
+  - name: show_consent_flow
+    type: function
+    desc: Show the CMP flow for an existing user after MSG_INITIALIZATION. Reports MSG_CONSENT_FLOW with EVENT_CONSENT_FLOW_COMPLETED or EVENT_CONSENT_FLOW_FAILED (code and error).
+
+#*****************************************************************************************************
+
+  - name: is_user_gdpr_region
+    type: function
+    desc: Check the user geography after MSG_INITIALIZATION.
+
+    returns:
+    - name: bool
+      type: boolean
+
+#*****************************************************************************************************
+
+  - name: set_debug_user_geography
+    type: function
+    desc: Force GDPR geography for testing. Set before initialize; requires applovin.privacy_policy_url.
+
+    parameters:
+    - name: enabled
+      type: boolean
+
+#*****************************************************************************************************
+
   - name: set_callback
     type: function
 

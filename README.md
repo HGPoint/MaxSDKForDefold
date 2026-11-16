@@ -2,7 +2,7 @@
 
 This is a native extension for [Defold engine](http://www.defold.com) with partial implementation of [AppLovin Max SDK](https://www.applovin.com/max/)
 
-ATTENTION! Currently only Android SDK is supported! No iOs support in current implementation! Even for Android only AdColony, AppLovin, Facebook, Google AdMob, InMobi, myTarget, Tapjoy, Vungle mediation adapters are supported.
+Android and iOS native implementations are included, with partial API support. See the platform-specific limitations and iOS consent-flow instructions below.
 
 Supported ad types (Android):
 - [Interstitials](https://dash.applovin.com/documentation/mediation/android/getting-started/interstitials)
@@ -10,7 +10,7 @@ Supported ad types (Android):
 
 Banner/MREC API symbols are present, but currently not implemented on Android (no-op).
 
-Used AppLovin SDK v13.5.1.
+Used AppLovin SDK v13.6.4.
 
 *Disclaimer: This extension is independent and unofficial, and not associated with AppLovin in any way.*
 
@@ -68,8 +68,6 @@ if maxsdk then
     -- Optional: pass user_id (string)
     maxsdk.initialize("USER_ID")
 
-    -- Optional: show AppLovin CMP for existing user
-    -- maxsdk.show_consent_flow()
 end
 
 -----------------------
@@ -108,6 +106,13 @@ end
 function maxsdk_callback(self, message_id, message)
     if message_id == maxsdk.MSG_INITIALIZATION then
         print("MSG_INITIALIZATION")
+
+    elseif message_id == maxsdk.MSG_CONSENT_FLOW then
+        if message.event == maxsdk.EVENT_CONSENT_FLOW_COMPLETED then
+            print("Consent flow completed")
+        elseif message.event == maxsdk.EVENT_CONSENT_FLOW_FAILED then
+            print("Consent flow failed", message.code, message.error, message.cmp_code, message.cmp_error)
+        end
 
     elseif message_id == maxsdk.MSG_INTERSTITIAL then
         if message.event == maxsdk.EVENT_CLOSED then
@@ -178,5 +183,22 @@ function maxsdk_callback(self, message_id, message)
     end
 end
 ```
+
+## Consent flow on iOS
+
+`maxsdk.show_consent_flow()` opens the integrated CMP for an existing user. Call it from a privacy-settings button after receiving `MSG_INITIALIZATION`:
+
+```lua
+-- Run from a user action after SDK initialization.
+maxsdk.show_consent_flow()
+```
+
+The result is delivered to the callback registered with `maxsdk.set_callback()` as `MSG_CONSENT_FLOW`. On iOS, an early call reports `EVENT_CONSENT_FLOW_FAILED` with `code = -1`; SDK failures include the SDK's `code` and `error`, plus the underlying CMP's `cmp_code` and `cmp_error`, and are also logged natively. Completion does not indicate whether the user granted consent.
+
+For the automatic consent flow during initialization, set `applovin.privacy_policy_url` in the consuming game's `game.project` before initialization. The bundled example does not supply this URL. The iOS Podfile includes Google Mobile Ads, which provides the Google UMP dependency. Configure and publish a GDPR message for the matching iOS app in AdMob's Privacy & messaging settings. Check the CMP entry in `maxsdk.open_mediation_debugger()` to verify the integration.
+
+To test outside a GDPR region, set `applovin.debug_user_geography = 1` or call `maxsdk.set_debug_user_geography(true)` before `maxsdk.initialize()`. This extension applies that setting only when `applovin.privacy_policy_url` is configured. Reinstall the app to retest the automatic first-user flow. Disable the debug override for release builds.
+
+See the [AppLovin iOS consent-flow guide](https://support.applovin.com/en/max/ios/overview/terms-and-privacy-policy-flow) for CMP configuration and testing. Rebuild the iOS native extension after changing its source; a game that depends on a released ZIP will continue using that ZIP until its dependency is updated.
 
 Feel free to push a Pull Request with other features implementation.

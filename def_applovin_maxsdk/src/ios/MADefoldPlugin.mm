@@ -9,6 +9,7 @@
 
 // Parent Fields
 @property (nonatomic, weak) ALSdk *sdk;
+@property (atomic, assign) BOOL sdkInitialized;
 @property (nonatomic, strong) UIWindow *window;
 
 // Fullscreen Ad Fields
@@ -41,6 +42,7 @@ static const int MSG_INTERSTITIAL = 1;
 static const int MSG_REWARDED = 2;
 static const int MSG_BANNER = 3;
 static const int MSG_INITIALIZATION = 4;
+static const int MSG_CONSENT_FLOW = 5;
 
 static const int EVENT_CLOSED = 1;
 static const int EVENT_FAILED_TO_SHOW = 2;
@@ -57,6 +59,8 @@ static const int EVENT_COLLAPSED = 12;
 static const int EVENT_REVENUE_PAID = 13;
 static const int EVENT_SIZE_UPDATE = 14;
 static const int EVENT_FAILED_TO_LOAD_WATERFALL = 15;
+static const int EVENT_CONSENT_FLOW_COMPLETED = 16;
+static const int EVENT_CONSENT_FLOW_FAILED = 17;
 static bool IS_USER_GDPR_REGION = false;
 
 #pragma mark - Initialization
@@ -111,6 +115,7 @@ static bool IS_USER_GDPR_REGION = false;
 
         [self.sdk initializeWithConfiguration: initializationConfiguration completionHandler:^(ALSdkConfiguration *configuration){
             // Start loading ads
+            self.sdkInitialized = YES;
             if (configuration.consentFlowUserGeography == ALConsentFlowUserGeographyGDPR) {
                 IS_USER_GDPR_REGION = true;
             }
@@ -917,15 +922,30 @@ static bool IS_USER_GDPR_REGION = false;
 
 - (void)showConsentFlow
 {
-     ALCMPService *cmpService = self.sdk.cmpService;
-
-    [cmpService showCMPForExistingUserWithCompletion:^(ALCMPError * _Nullable error) {
-        
-        if ( !error )
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if ( !self.sdkInitialized )
         {
-            // The CMP alert was shown successfully.
+            NSString *message = @"Wait for MSG_INITIALIZATION before calling maxsdk.show_consent_flow().";
+            NSLog(@"AppLovinMax consent flow: %@", message);
+            [self sendDefoldEvent: MSG_CONSENT_FLOW event_id: EVENT_CONSENT_FLOW_FAILED parameters: @{@"code": @(-1), @"error": message}];
+            return;
         }
-    }];
+
+        ALCMPService *cmpService = self.sdk.cmpService;
+        [cmpService showCMPForExistingUserWithCompletion:^(ALCMPError * _Nullable error) {
+            if ( error )
+            {
+                NSString *message = error.message ?: @"Unknown CMP error";
+                NSString *cmpMessage = error.cmpMessage ?: @"";
+                NSLog(@"AppLovinMax consent flow failed (%ld): %@; CMP (%ld): %@", (long)error.code, message, (long)error.cmpCode, cmpMessage);
+                [self sendDefoldEvent: MSG_CONSENT_FLOW event_id: EVENT_CONSENT_FLOW_FAILED parameters: @{@"code": @(error.code), @"error": message, @"cmp_code": @(error.cmpCode), @"cmp_error": cmpMessage}];
+            }
+            else
+            {
+                [self sendDefoldEvent: MSG_CONSENT_FLOW event_id: EVENT_CONSENT_FLOW_COMPLETED parameters: @{}];
+            }
+        }];
+    });
 }
 
 - (NSDictionary<NSString *, id> *)adInfoForAd:(MAAd *)ad
@@ -958,7 +978,7 @@ static bool IS_USER_GDPR_REGION = false;
 #pragma mark - Defold Bridge
 
 // NOTE: Defold deserializes to the relevant USTRUCT based on the JSON keys, so the keys must match with the corresponding UPROPERTY
-- (void)sendDefoldEvent:(int)msg_type event_id:(int)event_id parameters:(NSDictionary<NSString *, NSString *> *)parameters
+- (void)sendDefoldEvent:(int)msg_type event_id:(int)event_id parameters:(NSDictionary<NSString *, id> *)parameters
 {
     if ( self.eventCallback )
     {

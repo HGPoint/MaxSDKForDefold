@@ -127,6 +127,11 @@ void ShowBanner(BannerPosition bannerPos, const char* placement){
 void HideBanner(){
 }
 void ShowConsentFlow(){
+    if (PluginInstance == nil) {
+        NSLog(@"AppLovinMax consent flow: call maxsdk.initialize() and wait for MSG_INITIALIZATION before calling maxsdk.show_consent_flow().");
+        AddToQueueCallback(MSG_CONSENT_FLOW, "{\"event\":17,\"code\":-1,\"error\":\"Call maxsdk.initialize() and wait for MSG_INITIALIZATION before calling maxsdk.show_consent_flow().\"}");
+        return;
+    }
     [PluginInstance showConsentFlow];
 }
 bool IsUserGdprRegion(){
